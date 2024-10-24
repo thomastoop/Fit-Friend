@@ -1,3 +1,5 @@
+-- Creates the player model that the user sees in the interface while also handing all the cosmetics placed on this model. This is done because normally, if cosmetics apply to the regular character, they cannot be seen by the cloned character in the interface.
+
 local uis = game:GetService("UserInputService")
 
 local player = game.Players.LocalPlayer
