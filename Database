@@ -1,3 +1,5 @@
+-- Database for the Fit Friend app which stores all user data and resets necessary data each day.
+
 local DataStoreService = game:GetService("DataStoreService")
 
 local myDataStore = DataStoreService:GetDataStore("myDataStore")
