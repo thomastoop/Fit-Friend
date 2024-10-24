@@ -1,0 +1,1420 @@
+local uis = game:GetService("UserInputService")
+
+local player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+
+local MouseInDisplay, HoldInDisplay = false, false
+
+local currentX
+
+local goalReached = game.ReplicatedStorage.GoalReached
+
+local cheerAnim = Instance.new("Animation")
+cheerAnim.AnimationId = "rbxassetid://129423030"
+
+-- Character Display
+local VPFcam = Instance.new("Camera")
+VPFcam.Parent = script.Parent.ViewportFrame
+VPFcam.CFrame = CFrame.new(0,0,0)
+script.Parent.ViewportFrame.CurrentCamera = VPFcam
+
+repeat wait() until game:IsLoaded()
+
+char.Archivable = true
+
+local ClonedChar = char:Clone()
+
+ClonedChar.Parent = script.Parent.ViewportFrame.WorldModel
+ClonedChar.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+ClonedChar:SetPrimaryPartCFrame(CFrame.new(Vector3.new(0,0,-9.5),Vector3.new(0,0,0)))
+
+-- Ensure the Animator exists on the cloned character
+local humanoid = ClonedChar:FindFirstChild("Humanoid")
+
+local animator = humanoid:FindFirstChild("Animator")
+if not animator then
+	animator = Instance.new("Animator")
+	animator.Parent = humanoid
+end
+
+-- Turning Feature
+uis.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		if MouseInDisplay == true then
+			HoldInDisplay = true
+			currentX = nil
+		end
+	end
+end)
+
+uis.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		HoldInDisplay = false
+	end
+end)
+
+script.Parent.ViewportFrame.MouseMoved:Connect(function(X,Y)
+	if HoldInDisplay == false then return end
+
+	if currentX then 
+		ClonedChar.PrimaryPart.CFrame *= CFrame.fromEulerAnglesXYZ(0,((X-currentX)*.025),0) 
+	end
+
+	currentX = X
+end)
+
+goalReached.OnClientEvent:Connect(function()
+	print("Goal Reached, starting cheer animation")
+	local cheerTrack = animator:LoadAnimation(cheerAnim)
+	cheerTrack.Priority = Enum.AnimationPriority.Action
+
+	cheerTrack:Play()
+end)
+
+local changeSkinColor = game.ReplicatedStorage.ChangeSkinColor
+local setts = player.PlayerGui.Main.SettingsMain
+local whiteButton = setts.White
+local siennaButton = setts.Sienna
+local honeyButton = setts.Honey
+local umberButton = setts.Umber
+local warmIvoryButton = setts.WarmIvory
+local limestoneButton = setts.Limestone
+local bandButton = setts.Band
+local goldenButton = setts.Golden
+local paleIvoryButton = setts.PaleIvory
+local beigeButton = setts.Beige
+local almondButton = setts.Almond
+local espressoButton = setts.Espresso
+local roseBeigeButton = setts.RoseBeige
+local amberButton = setts.Amber
+local bronzeButton = setts.Bronze
+local chocolateButton = setts.Chocolate
+
+bodyColors = {'HeadColor3', 'LeftArmColor3', 'LeftLegColor3', 'RightArmColor3', 'RightLegColor3', 'TorsoColor3'}
+
+if player.playerData.skinColor.Value == "White" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = whiteButton.BackgroundColor3
+		player.Character["Body Colors"][color] = whiteButton.BackgroundColor3
+	end
+elseif player.playerData.skinColor.Value == "Sienna" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = siennaButton.BackgroundColor3
+		player.Character["Body Colors"][color] = siennaButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "Honey" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = honeyButton.BackgroundColor3
+		player.Character["Body Colors"][color] = honeyButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "Umber" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = umberButton.BackgroundColor3
+		player.Character["Body Colors"][color] = umberButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "WarmIvory" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = warmIvoryButton.BackgroundColor3
+		player.Character["Body Colors"][color] = warmIvoryButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "Limestone" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = limestoneButton.BackgroundColor3
+		player.Character["Body Colors"][color] = limestoneButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "Band" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = bandButton.BackgroundColor3
+		player.Character["Body Colors"][color] = bandButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "Golden" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = goldenButton.BackgroundColor3
+		player.Character["Body Colors"][color] = goldenButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "PaleIvory" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = paleIvoryButton.BackgroundColor3
+		player.Character["Body Colors"][color] = paleIvoryButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "Beige" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = beigeButton.BackgroundColor3
+		player.Character["Body Colors"][color] = beigeButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "Almond" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = almondButton.BackgroundColor3
+		player.Character["Body Colors"][color] = almondButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "Espresso" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = espressoButton.BackgroundColor3
+		player.Character["Body Colors"][color] = espressoButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "RoseBeige" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = roseBeigeButton.BackgroundColor3
+		player.Character["Body Colors"][color] = roseBeigeButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "Amber" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = amberButton.BackgroundColor3
+		player.Character["Body Colors"][color] = amberButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "Bronze" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = bronzeButton.BackgroundColor3
+		player.Character["Body Colors"][color] = bronzeButton.BackgroundColor3 
+	end
+elseif player.playerData.skinColor.Value == "Chocolate" then
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = chocolateButton.BackgroundColor3
+		player.Character["Body Colors"][color] = chocolateButton.BackgroundColor3 
+	end
+	
+end
+
+whiteButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = whiteButton.BackgroundColor3
+		player.Character["Body Colors"][color] = whiteButton.BackgroundColor3
+		changeSkinColor:FireServer("White")
+	end
+end)
+
+siennaButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = siennaButton.BackgroundColor3
+		player.Character["Body Colors"][color] = siennaButton.BackgroundColor3
+		changeSkinColor:FireServer("Sienna")
+	end
+end)
+
+honeyButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = honeyButton.BackgroundColor3
+		player.Character["Body Colors"][color] = honeyButton.BackgroundColor3
+		changeSkinColor:FireServer("Honey")
+	end
+end)
+
+umberButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = umberButton.BackgroundColor3
+		player.Character["Body Colors"][color] = umberButton.BackgroundColor3
+		changeSkinColor:FireServer("Umber")
+	end
+end)
+
+
+warmIvoryButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = warmIvoryButton.BackgroundColor3
+		player.Character["Body Colors"][color] = warmIvoryButton.BackgroundColor3
+		changeSkinColor:FireServer("WarmIvory")
+	end
+end)
+
+limestoneButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = limestoneButton.BackgroundColor3
+		player.Character["Body Colors"][color] = limestoneButton.BackgroundColor3
+		changeSkinColor:FireServer("Limestone")
+	end
+end)
+
+bandButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = bandButton.BackgroundColor3
+		player.Character["Body Colors"][color] = bandButton.BackgroundColor3
+		changeSkinColor:FireServer("Band")
+	end
+end)
+
+goldenButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = goldenButton.BackgroundColor3
+		player.Character["Body Colors"][color] = goldenButton.BackgroundColor3
+		changeSkinColor:FireServer("Golden")
+	end
+end)
+
+
+paleIvoryButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = paleIvoryButton.BackgroundColor3
+		player.Character["Body Colors"][color] = paleIvoryButton.BackgroundColor3
+		changeSkinColor:FireServer("PaleIvory")
+	end
+end)
+
+beigeButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = beigeButton.BackgroundColor3
+		player.Character["Body Colors"][color] = beigeButton.BackgroundColor3
+		changeSkinColor:FireServer("Beige")
+	end
+end)
+
+almondButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = almondButton.BackgroundColor3
+		player.Character["Body Colors"][color] = almondButton.BackgroundColor3
+		changeSkinColor:FireServer("Almond")
+	end
+end)
+
+espressoButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = espressoButton.BackgroundColor3
+		player.Character["Body Colors"][color] = espressoButton.BackgroundColor3
+		changeSkinColor:FireServer("Espresso")
+	end
+end)
+
+
+roseBeigeButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = roseBeigeButton.BackgroundColor3
+		player.Character["Body Colors"][color] = roseBeigeButton.BackgroundColor3
+		changeSkinColor:FireServer("RoseBeige")
+	end
+end)
+
+amberButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = amberButton.BackgroundColor3
+		player.Character["Body Colors"][color] = amberButton.BackgroundColor3
+		changeSkinColor:FireServer("Amber")
+	end
+end)
+
+bronzeButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = bronzeButton.BackgroundColor3
+		player.Character["Body Colors"][color] = bronzeButton.BackgroundColor3
+		changeSkinColor:FireServer("Bronze")
+	end
+end)
+
+chocolateButton.Activated:Connect(function()
+	for _, color in bodyColors do
+		ClonedChar["Body Colors"][color] = chocolateButton.BackgroundColor3
+		player.Character["Body Colors"][color] = chocolateButton.BackgroundColor3
+		changeSkinColor:FireServer("Chocolate")
+	end
+end)
+
+local changeHat = game.ReplicatedStorage.ChangeHatEquipped
+
+local bronzeTopHatButton = player.PlayerGui.Main.BronzeMain.BronzeTopHat
+local silverTopHatButton = player.PlayerGui.Main.SilverMain.SilverTopHat
+local goldTopHatButton = player.PlayerGui.Main.GoldMain.GoldTopHat
+local platTopHatButton = player.PlayerGui.Main.PlatinumMain.PlatinumTopHat
+local emeraldTopHatButton = player.PlayerGui.Main.EmeraldMain.EmeraldTopHat
+local diamondTopHatButton = player.PlayerGui.Main.DiamondMain.DiamondTopHat
+local ultimateTopHatButton = player.PlayerGui.Main.UltimateMain.UltimateTopHat
+
+if player.playerData.topHatEquipped.Value == "Bronze" then
+	for _, hats in player.Character:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	for _, hats in ClonedChar:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	player.Character.BronzeTopHat.Handle.Transparency = 0
+	ClonedChar.BronzeTopHat.Handle.Transparency = 0
+	bronzeTopHatButton.Check.Visible = true
+	silverTopHatButton.Check.Visible = false
+	goldTopHatButton.Check.Visible = false
+	platTopHatButton.Check.Visible = false
+	emeraldTopHatButton.Check.Visible = false
+	diamondTopHatButton.Check.Visible = false
+	ultimateTopHatButton.Check.Visible = false
+	
+elseif player.playerData.topHatEquipped.Value == "Silver" then
+	for _, hats in player.Character:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	for _, hats in ClonedChar:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	player.Character.SilverTopHat.Handle.Transparency = 0
+	ClonedChar.SilverTopHat.Handle.Transparency = 0
+	bronzeTopHatButton.Check.Visible = false
+	silverTopHatButton.Check.Visible = true
+	goldTopHatButton.Check.Visible = false
+	platTopHatButton.Check.Visible = false
+	emeraldTopHatButton.Check.Visible = false
+	diamondTopHatButton.Check.Visible = false
+	ultimateTopHatButton.Check.Visible = false
+
+elseif player.playerData.topHatEquipped.Value == "Gold" then
+	for _, hats in player.Character:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	for _, hats in ClonedChar:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	player.Character.GoldTopHat.Handle.Transparency = 0
+	ClonedChar.GoldTopHat.Handle.Transparency = 0
+	bronzeTopHatButton.Check.Visible = false
+	silverTopHatButton.Check.Visible = false
+	goldTopHatButton.Check.Visible = true
+	platTopHatButton.Check.Visible = false
+	emeraldTopHatButton.Check.Visible = false
+	diamondTopHatButton.Check.Visible = false
+	ultimateTopHatButton.Check.Visible = false
+
+elseif player.playerData.topHatEquipped.Value == "Platinum" then
+	for _, hats in player.Character:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	for _, hats in ClonedChar:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	player.Character.PlatinumTopHat.Handle.Transparency = 0
+	ClonedChar.PlatinumTopHat.Handle.Transparency = 0
+	bronzeTopHatButton.Check.Visible = false
+	silverTopHatButton.Check.Visible = false
+	goldTopHatButton.Check.Visible = false
+	platTopHatButton.Check.Visible = true
+	emeraldTopHatButton.Check.Visible = false
+	diamondTopHatButton.Check.Visible = false
+	ultimateTopHatButton.Check.Visible = false
+
+elseif player.playerData.topHatEquipped.Value == "Emerald" then
+	for _, hats in player.Character:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	for _, hats in ClonedChar:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	player.Character.EmeraldTopHat.Handle.Transparency = 0
+	ClonedChar.EmeraldTopHat.Handle.Transparency = 0
+	bronzeTopHatButton.Check.Visible = false
+	silverTopHatButton.Check.Visible = false
+	goldTopHatButton.Check.Visible = false
+	platTopHatButton.Check.Visible = false
+	emeraldTopHatButton.Check.Visible = true
+	diamondTopHatButton.Check.Visible = false
+	ultimateTopHatButton.Check.Visible = false
+
+elseif player.playerData.topHatEquipped.Value == "Diamond" then
+	for _, hats in player.Character:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	for _, hats in ClonedChar:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	player.Character.DiamondTopHat.Handle.Transparency = 0
+	ClonedChar.DiamondTopHat.Handle.Transparency = 0
+	bronzeTopHatButton.Check.Visible = false
+	silverTopHatButton.Check.Visible = false
+	goldTopHatButton.Check.Visible = false
+	platTopHatButton.Check.Visible = false
+	emeraldTopHatButton.Check.Visible = false
+	diamondTopHatButton.Check.Visible = true
+	ultimateTopHatButton.Check.Visible = false
+	
+elseif player.playerData.topHatEquipped.Value == "Ultimate" then
+	for _, hats in player.Character:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	for _, hats in ClonedChar:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	player.Character.UltimateTopHat.Handle.Transparency = 0
+	ClonedChar.UltimateTopHat.Handle.Transparency = 0
+	bronzeTopHatButton.Check.Visible = false
+	silverTopHatButton.Check.Visible = false
+	goldTopHatButton.Check.Visible = false
+	platTopHatButton.Check.Visible = false
+	emeraldTopHatButton.Check.Visible = false
+	diamondTopHatButton.Check.Visible = false
+	ultimateTopHatButton.Check.Visible = true
+
+
+
+else
+	for _, hats in player.Character:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	for _, hats in ClonedChar:GetChildren() do
+		if hats:IsA("Accessory") then
+			hats.Handle.Transparency = 1
+		end
+	end
+	bronzeTopHatButton.Check.Visible = false
+	silverTopHatButton.Check.Visible = false
+	goldTopHatButton.Check.Visible = false
+	platTopHatButton.Check.Visible = false
+	emeraldTopHatButton.Check.Visible = false
+	diamondTopHatButton.Check.Visible = false
+	ultimateTopHatButton.Check.Visible = false
+
+end
+
+bronzeTopHatButton.Activated:Connect(function()
+	if player.playerData.topHatEquipped.Value == "Bronze" then
+		player.Character.BronzeTopHat.Handle.Transparency = 1
+		ClonedChar.BronzeTopHat.Handle.Transparency = 1
+		bronzeTopHatButton.Check.Visible = false
+		changeHat:FireServer("None")
+	else
+		for _, hats in player.Character:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		for _, hats in ClonedChar:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		player.Character.BronzeTopHat.Handle.Transparency = 0
+		ClonedChar.BronzeTopHat.Handle.Transparency = 0
+		bronzeTopHatButton.Check.Visible = true
+		silverTopHatButton.Check.Visible = false
+		goldTopHatButton.Check.Visible = false
+		platTopHatButton.Check.Visible = false
+		emeraldTopHatButton.Check.Visible = false
+		diamondTopHatButton.Check.Visible = false
+		ultimateTopHatButton.Check.Visible = false
+
+		changeHat:FireServer("Bronze")
+	end
+end)
+
+silverTopHatButton.Activated:Connect(function()
+	if player.playerData.topHatEquipped.Value == "Silver" then
+		player.Character.SilverTopHat.Handle.Transparency = 1
+		ClonedChar.SilverTopHat.Handle.Transparency = 1
+		silverTopHatButton.Check.Visible = false
+		changeHat:FireServer("None")
+	else
+		for _, hats in player.Character:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		for _, hats in ClonedChar:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		player.Character.SilverTopHat.Handle.Transparency = 0
+		ClonedChar.SilverTopHat.Handle.Transparency = 0
+		bronzeTopHatButton.Check.Visible = false
+		silverTopHatButton.Check.Visible = true
+		goldTopHatButton.Check.Visible = false
+		platTopHatButton.Check.Visible = false
+		emeraldTopHatButton.Check.Visible = false
+		diamondTopHatButton.Check.Visible = false
+		ultimateTopHatButton.Check.Visible = false
+
+		changeHat:FireServer("Silver")
+	end
+end)
+
+goldTopHatButton.Activated:Connect(function()
+	if player.playerData.topHatEquipped.Value == "Gold" then
+		player.Character.GoldTopHat.Handle.Transparency = 1
+		ClonedChar.GoldTopHat.Handle.Transparency = 1
+		goldTopHatButton.Check.Visible = false
+		changeHat:FireServer("None")
+	else
+		for _, hats in player.Character:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		for _, hats in ClonedChar:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		player.Character.GoldTopHat.Handle.Transparency = 0
+		ClonedChar.GoldTopHat.Handle.Transparency = 0
+		bronzeTopHatButton.Check.Visible = false
+		silverTopHatButton.Check.Visible = false
+		goldTopHatButton.Check.Visible = true
+		platTopHatButton.Check.Visible = false
+		emeraldTopHatButton.Check.Visible = false
+		diamondTopHatButton.Check.Visible = false
+		ultimateTopHatButton.Check.Visible = false
+
+		changeHat:FireServer("Gold")
+	end
+end)
+
+platTopHatButton.Activated:Connect(function()
+	if player.playerData.topHatEquipped.Value == "Platinum" then
+		player.Character.PlatinumTopHat.Handle.Transparency = 1
+		ClonedChar.PlatinumTopHat.Handle.Transparency = 1
+		platTopHatButton.Check.Visible = false
+		changeHat:FireServer("None")
+	else
+		for _, hats in player.Character:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		for _, hats in ClonedChar:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		player.Character.PlatinumTopHat.Handle.Transparency = 0
+		ClonedChar.PlatinumTopHat.Handle.Transparency = 0
+		bronzeTopHatButton.Check.Visible = false
+		silverTopHatButton.Check.Visible = false
+		goldTopHatButton.Check.Visible = false
+		platTopHatButton.Check.Visible = true
+		emeraldTopHatButton.Check.Visible = false
+		diamondTopHatButton.Check.Visible = false
+		ultimateTopHatButton.Check.Visible = false
+
+		changeHat:FireServer("Platinum")
+	end
+end)
+
+emeraldTopHatButton.Activated:Connect(function()
+	if player.playerData.topHatEquipped.Value == "Emerald" then
+		player.Character.EmeraldTopHat.Handle.Transparency = 1
+		ClonedChar.EmeraldTopHat.Handle.Transparency = 1
+		emeraldTopHatButton.Check.Visible = false
+		changeHat:FireServer("None")
+	else
+		for _, hats in player.Character:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		for _, hats in ClonedChar:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		player.Character.EmeraldTopHat.Handle.Transparency = 0
+		ClonedChar.EmeraldTopHat.Handle.Transparency = 0
+		bronzeTopHatButton.Check.Visible = false
+		silverTopHatButton.Check.Visible = false
+		goldTopHatButton.Check.Visible = false
+		platTopHatButton.Check.Visible = false
+		emeraldTopHatButton.Check.Visible = true
+		diamondTopHatButton.Check.Visible = false
+		ultimateTopHatButton.Check.Visible = false
+
+		changeHat:FireServer("Emerald")
+	end
+end)
+
+diamondTopHatButton.Activated:Connect(function()
+	if player.playerData.topHatEquipped.Value == "Diamond" then
+		player.Character.DiamondTopHat.Handle.Transparency = 1
+		ClonedChar.DiamondTopHat.Handle.Transparency = 1
+		diamondTopHatButton.Check.Visible = false
+		changeHat:FireServer("None")
+	else
+		for _, hats in player.Character:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		for _, hats in ClonedChar:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		player.Character.DiamondTopHat.Handle.Transparency = 0
+		ClonedChar.DiamondTopHat.Handle.Transparency = 0
+		bronzeTopHatButton.Check.Visible = false
+		silverTopHatButton.Check.Visible = false
+		goldTopHatButton.Check.Visible = false
+		platTopHatButton.Check.Visible = false
+		emeraldTopHatButton.Check.Visible = false
+		diamondTopHatButton.Check.Visible = true
+		ultimateTopHatButton.Check.Visible = false
+
+		changeHat:FireServer("Diamond")
+	end
+end)
+
+ultimateTopHatButton.Activated:Connect(function()
+	if player.playerData.topHatEquipped.Value == "Ultimate" then
+		player.Character.UltimateTopHat.Handle.Transparency = 1
+		ClonedChar.UltimateTopHat.Handle.Transparency = 1
+		ultimateTopHatButton.Check.Visible = false
+		changeHat:FireServer("None")
+	else
+		for _, hats in player.Character:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		for _, hats in ClonedChar:GetChildren() do
+			if hats:IsA("Accessory") then
+				hats.Handle.Transparency = 1
+			end
+		end
+		player.Character.UltimateTopHat.Handle.Transparency = 0
+		ClonedChar.UltimateTopHat.Handle.Transparency = 0
+		bronzeTopHatButton.Check.Visible = false
+		silverTopHatButton.Check.Visible = false
+		goldTopHatButton.Check.Visible = false
+		platTopHatButton.Check.Visible = false
+		emeraldTopHatButton.Check.Visible = false
+		diamondTopHatButton.Check.Visible = false
+		ultimateTopHatButton.Check.Visible = true
+
+		changeHat:FireServer("Ultimate")
+	end
+end)
+
+local changeBuddy = game.ReplicatedStorage.ChangeBuddyEquipped
+
+local bronzeBuddyButton = player.PlayerGui.Main.BronzeMain.BronzeBuddy
+local silverBuddyButton = player.PlayerGui.Main.SilverMain.SilverBuddy
+local goldBuddyButtonn = player.PlayerGui.Main.GoldMain.GoldBuddy
+local platBuddyButton = player.PlayerGui.Main.PlatinumMain.PlatinumBuddy
+local emeraldBuddyButton = player.PlayerGui.Main.EmeraldMain.EmeraldBuddy
+local diamondBuddyButton = player.PlayerGui.Main.DiamondMain.DiamondBuddy
+local ultimateBuddyButton = player.PlayerGui.Main.UltimateMain.UltimateBuddy
+
+if player.playerData.buddyEquipped.Value == "Bronze" then
+	local BronzeBuddy = game.ReplicatedStorage.BronzeBuddy:Clone()
+	BronzeBuddy.Parent = ClonedChar
+	BronzeBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	BronzeBuddy.Body.Part0 = ClonedChar.Torso
+	changeBuddy:FireServer("Bronze", ClonedChar)
+	bronzeBuddyButton.Check.Visible = true
+	silverBuddyButton.Check.Visible = false
+	goldBuddyButtonn.Check.Visible = false
+	platBuddyButton.Check.Visible = false
+	emeraldBuddyButton.Check.Visible = false
+	diamondBuddyButton.Check.Visible = false
+	ultimateBuddyButton.Check.Visible = false
+
+elseif player.playerData.buddyEquipped.Value == "Silver" then
+	local SilverBuddy = game.ReplicatedStorage.SilverBuddy:Clone()
+	SilverBuddy.Parent = ClonedChar
+	SilverBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	SilverBuddy.Body.Part0 = ClonedChar.Torso
+
+	changeBuddy:FireServer("Silver", ClonedChar)
+	bronzeBuddyButton.Check.Visible = false
+	silverBuddyButton.Check.Visible = true
+	goldBuddyButtonn.Check.Visible = false
+	platBuddyButton.Check.Visible = false
+	emeraldBuddyButton.Check.Visible = false
+	diamondBuddyButton.Check.Visible = false
+	ultimateBuddyButton.Check.Visible = false
+
+elseif player.playerData.buddyEquipped.Value == "Gold" then
+	local GoldBuddy = game.ReplicatedStorage.GoldBuddy:Clone()
+	GoldBuddy.Parent = ClonedChar
+	GoldBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	GoldBuddy.Body.Part0 = ClonedChar.Torso
+	
+	changeBuddy:FireServer("Gold", ClonedChar)
+	bronzeBuddyButton.Check.Visible = false
+	silverBuddyButton.Check.Visible = false
+	goldBuddyButtonn.Check.Visible = true
+	platBuddyButton.Check.Visible = false
+	emeraldBuddyButton.Check.Visible = false
+	diamondBuddyButton.Check.Visible = false
+	ultimateBuddyButton.Check.Visible = false
+
+elseif player.playerData.buddyEquipped.Value == "Platinum" then
+	local PlatinumBuddy = game.ReplicatedStorage.PlatinumBuddy:Clone()
+	PlatinumBuddy.Parent = ClonedChar
+	PlatinumBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	PlatinumBuddy.Body.Part0 = ClonedChar.Torso
+	changeBuddy:FireServer("Platinum", ClonedChar)
+
+	bronzeBuddyButton.Check.Visible = false
+	silverBuddyButton.Check.Visible = false
+	goldBuddyButtonn.Check.Visible = false
+	platBuddyButton.Check.Visible = true
+	emeraldBuddyButton.Check.Visible = false
+	diamondBuddyButton.Check.Visible = false
+	ultimateBuddyButton.Check.Visible = false
+
+elseif player.playerData.buddyEquipped.Value == "Emerald" then
+	local EmeraldBuddy = game.ReplicatedStorage.EmeraldBuddy:Clone()
+	EmeraldBuddy.Parent = ClonedChar
+	EmeraldBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	EmeraldBuddy.Body.Part0 = ClonedChar.Torso
+	changeBuddy:FireServer("Emerald", ClonedChar)
+
+	bronzeBuddyButton.Check.Visible = false
+	silverBuddyButton.Check.Visible = false
+	goldBuddyButtonn.Check.Visible = false
+	platBuddyButton.Check.Visible = false
+	emeraldBuddyButton.Check.Visible = true
+	diamondBuddyButton.Check.Visible = false
+	ultimateBuddyButton.Check.Visible = false
+
+elseif player.playerData.buddyEquipped.Value == "Diamond" then
+	local DiamondBuddy = game.ReplicatedStorage.DiamondBuddy:Clone()
+	DiamondBuddy.Parent = ClonedChar
+	DiamondBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	DiamondBuddy.Body.Part0 = ClonedChar.Torso
+	changeBuddy:FireServer("Diamond", ClonedChar)
+
+	bronzeBuddyButton.Check.Visible = false
+	silverBuddyButton.Check.Visible = false
+	goldBuddyButtonn.Check.Visible = false
+	platBuddyButton.Check.Visible = false
+	emeraldBuddyButton.Check.Visible = false
+	diamondBuddyButton.Check.Visible = true
+	ultimateBuddyButton.Check.Visible = false
+
+elseif player.playerData.buddyEquipped.Value == "Ultimate" then
+	local UltimateBuddy = game.ReplicatedStorage.UltimateBuddy:Clone()
+	UltimateBuddy.Parent = ClonedChar
+	UltimateBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	UltimateBuddy.Body.Part0 = ClonedChar.Torso
+
+	changeBuddy:FireServer("Ultimate", ClonedChar)
+
+	bronzeBuddyButton.Check.Visible = false
+	silverBuddyButton.Check.Visible = false
+	goldBuddyButtonn.Check.Visible = false
+	platBuddyButton.Check.Visible = false
+	emeraldBuddyButton.Check.Visible = false
+	diamondBuddyButton.Check.Visible = false
+	ultimateBuddyButton.Check.Visible = true
+
+
+else
+	for _, buddy in ClonedChar:GetChildren() do
+		if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+			buddy:Destroy()
+		end
+	end
+	changeBuddy:FireServer("None", ClonedChar)
+
+	bronzeBuddyButton.Check.Visible = false
+	silverBuddyButton.Check.Visible = false
+	goldBuddyButtonn.Check.Visible = false
+	platBuddyButton.Check.Visible = false
+	emeraldBuddyButton.Check.Visible = false
+	diamondBuddyButton.Check.Visible = false
+	ultimateBuddyButton.Check.Visible = false
+
+end
+
+bronzeBuddyButton.Activated:Connect(function()
+	if player.playerData.buddyEquipped.Value == "Bronze" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		bronzeBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local BronzeBuddy = game.ReplicatedStorage.BronzeBuddy:Clone()
+		BronzeBuddy.Parent = ClonedChar
+		BronzeBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		BronzeBuddy.Body.Part0 = ClonedChar.Torso
+		bronzeBuddyButton.Check.Visible = true
+		silverBuddyButton.Check.Visible = false
+		goldBuddyButtonn.Check.Visible = false
+		platBuddyButton.Check.Visible = false
+		emeraldBuddyButton.Check.Visible = false
+		diamondBuddyButton.Check.Visible = false
+		ultimateBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("Bronze", ClonedChar)
+	end
+end)
+
+silverBuddyButton.Activated:Connect(function()
+	if player.playerData.buddyEquipped.Value == "Silver" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		silverBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local SilverBuddy = game.ReplicatedStorage.SilverBuddy:Clone()
+		SilverBuddy.Parent = ClonedChar
+		SilverBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		SilverBuddy.Body.Part0 = ClonedChar.Torso
+
+		bronzeBuddyButton.Check.Visible = false
+		silverBuddyButton.Check.Visible = true
+		goldBuddyButtonn.Check.Visible = false
+		platBuddyButton.Check.Visible = false
+		emeraldBuddyButton.Check.Visible = false
+		diamondBuddyButton.Check.Visible = false
+		ultimateBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("Silver", ClonedChar)
+	end
+end)
+
+goldBuddyButtonn.Activated:Connect(function()
+	if player.playerData.buddyEquipped.Value == "Gold" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		goldBuddyButtonn.Check.Visible = false
+		changeBuddy:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local GoldBuddy = game.ReplicatedStorage.GoldBuddy:Clone()
+		GoldBuddy.Parent = ClonedChar
+		GoldBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		GoldBuddy.Body.Part0 = ClonedChar.Torso
+		bronzeBuddyButton.Check.Visible = false
+		silverBuddyButton.Check.Visible = false
+		goldBuddyButtonn.Check.Visible = true
+		platBuddyButton.Check.Visible = false
+		emeraldBuddyButton.Check.Visible = false
+		diamondBuddyButton.Check.Visible = false
+		ultimateBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("Gold", ClonedChar)
+	end
+end)
+
+platBuddyButton.Activated:Connect(function()
+	if player.playerData.buddyEquipped.Value == "Platinum" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		platBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local PlatinumBuddy = game.ReplicatedStorage.PlatinumBuddy:Clone()
+		PlatinumBuddy.Parent = ClonedChar
+		PlatinumBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		PlatinumBuddy.Body.Part0 = ClonedChar.Torso
+		bronzeBuddyButton.Check.Visible = false
+		silverBuddyButton.Check.Visible = false
+		goldBuddyButtonn.Check.Visible = false
+		platBuddyButton.Check.Visible = true
+		emeraldBuddyButton.Check.Visible = false
+		diamondBuddyButton.Check.Visible = false
+		ultimateBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("Platinum", ClonedChar)
+	end
+end)
+
+emeraldBuddyButton.Activated:Connect(function()
+	if player.playerData.buddyEquipped.Value == "Emerald" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		emeraldBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local EmeraldBuddy = game.ReplicatedStorage.EmeraldBuddy:Clone()
+		EmeraldBuddy.Parent = ClonedChar
+		EmeraldBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		EmeraldBuddy.Body.Part0 = ClonedChar.Torso
+		bronzeBuddyButton.Check.Visible = false
+		silverBuddyButton.Check.Visible = false
+		goldBuddyButtonn.Check.Visible = false
+		platBuddyButton.Check.Visible = false
+		emeraldBuddyButton.Check.Visible = true
+		diamondBuddyButton.Check.Visible = false
+		ultimateBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("Emerald", ClonedChar)
+	end
+end)
+
+diamondBuddyButton.Activated:Connect(function()
+	if player.playerData.buddyEquipped.Value == "Diamond" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		diamondBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local DiamondBuddy = game.ReplicatedStorage.DiamondBuddy:Clone()
+		DiamondBuddy.Parent = ClonedChar
+		DiamondBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		DiamondBuddy.Body.Part0 = ClonedChar.Torso
+		bronzeBuddyButton.Check.Visible = false
+		silverBuddyButton.Check.Visible = false
+		goldBuddyButtonn.Check.Visible = false
+		platBuddyButton.Check.Visible = false
+		emeraldBuddyButton.Check.Visible = false
+		diamondBuddyButton.Check.Visible = true
+		ultimateBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("Diamond", ClonedChar)
+	end
+end)
+
+ultimateBuddyButton.Activated:Connect(function()
+	if player.playerData.buddyEquipped.Value == "Ultimate" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		ultimateBuddyButton.Check.Visible = false
+		changeBuddy:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local UltimateBuddy = game.ReplicatedStorage.UltimateBuddy:Clone()
+		UltimateBuddy.Parent = ClonedChar
+		UltimateBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		UltimateBuddy.Body.Part0 = ClonedChar.Torso
+		
+		bronzeBuddyButton.Check.Visible = false
+		silverBuddyButton.Check.Visible = false
+		goldBuddyButtonn.Check.Visible = false
+		platBuddyButton.Check.Visible = false
+		emeraldBuddyButton.Check.Visible = false
+		diamondBuddyButton.Check.Visible = false
+		ultimateBuddyButton.Check.Visible = true
+		changeBuddy:FireServer("Ultimate", ClonedChar)
+		
+	end
+end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local changeBackpack = game.ReplicatedStorage.ChangeBackpackEquipped
+
+local bronzeBackpackButton = player.PlayerGui.Main.BronzeMain.BronzeBackpack
+local silverBackpackButton = player.PlayerGui.Main.SilverMain.SilverBackpack
+local goldBackpackButton = player.PlayerGui.Main.GoldMain.GoldBackpack
+local platBackpackButton = player.PlayerGui.Main.PlatinumMain.PlatinumBackpack
+local emeraldBackpackButton = player.PlayerGui.Main.EmeraldMain.EmeraldBackpack
+local diamondBackpackButton = player.PlayerGui.Main.DiamondMain.DiamondBackpack
+local ultimateBackpackButton = player.PlayerGui.Main.UltimateMain.UltimateBackpack
+
+if player.playerData.backpackEquipped.Value == "Bronze" then
+	local BronzeBuddy = game.ReplicatedStorage.BronzeBackpack:Clone()
+	BronzeBuddy.Parent = ClonedChar
+	BronzeBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	BronzeBuddy.Body.Part0 = ClonedChar.Torso
+	changeBackpack:FireServer("Bronze", ClonedChar)
+	bronzeBackpackButton.Check.Visible = true
+	silverBackpackButton.Check.Visible = false
+	goldBackpackButton.Check.Visible = false
+	platBackpackButton.Check.Visible = false
+	emeraldBackpackButton.Check.Visible = false
+	diamondBackpackButton.Check.Visible = false
+	ultimateBackpackButton.Check.Visible = false
+
+elseif player.playerData.backpackEquipped.Value == "Silver" then
+	local SilverBuddy = game.ReplicatedStorage.SilverBuddy:Clone()
+	SilverBuddy.Parent = ClonedChar
+	SilverBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	SilverBuddy.Body.Part0 = ClonedChar.Torso
+
+	changeBackpack:FireServer("Silver", ClonedChar)
+	bronzeBackpackButton.Check.Visible = false
+	silverBackpackButton.Check.Visible = true
+	goldBackpackButton.Check.Visible = false
+	platBackpackButton.Check.Visible = false
+	emeraldBackpackButton.Check.Visible = false
+	diamondBackpackButton.Check.Visible = false
+	ultimateBackpackButton.Check.Visible = false
+
+elseif player.playerData.backpackEquipped.Value == "Gold" then
+	local GoldBuddy = game.ReplicatedStorage.GoldBuddy:Clone()
+	GoldBuddy.Parent = ClonedChar
+	GoldBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	GoldBuddy.Body.Part0 = ClonedChar.Torso
+	
+	changeBackpack:FireServer("Gold", ClonedChar)
+	bronzeBackpackButton.Check.Visible = false
+	silverBackpackButton.Check.Visible = false
+	goldBackpackButton.Check.Visible = true
+	platBackpackButton.Check.Visible = false
+	emeraldBackpackButton.Check.Visible = false
+	diamondBackpackButton.Check.Visible = false
+	ultimateBackpackButton.Check.Visible = false
+
+elseif player.playerData.backpackEquipped.Value == "Platinum" then
+	local PlatinumBuddy = game.ReplicatedStorage.PlatinumBuddy:Clone()
+	PlatinumBuddy.Parent = ClonedChar
+	PlatinumBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	PlatinumBuddy.Body.Part0 = ClonedChar.Torso
+	changeBackpack:FireServer("Platinum", ClonedChar)
+
+	bronzeBackpackButton.Check.Visible = false
+	silverBackpackButton.Check.Visible = false
+	goldBackpackButton.Check.Visible = false
+	platBackpackButton.Check.Visible = true
+	emeraldBackpackButton.Check.Visible = false
+	diamondBackpackButton.Check.Visible = false
+	ultimateBackpackButton.Check.Visible = false
+
+elseif player.playerData.backpackEquipped.Value == "Emerald" then
+	local EmeraldBuddy = game.ReplicatedStorage.EmeraldBuddy:Clone()
+	EmeraldBuddy.Parent = ClonedChar
+	EmeraldBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	EmeraldBuddy.Body.Part0 = ClonedChar.Torso
+	changeBackpack:FireServer("Emerald", ClonedChar)
+
+	bronzeBackpackButton.Check.Visible = false
+	silverBackpackButton.Check.Visible = false
+	goldBackpackButton.Check.Visible = false
+	platBackpackButton.Check.Visible = false
+	emeraldBackpackButton.Check.Visible = true
+	diamondBackpackButton.Check.Visible = false
+	ultimateBackpackButton.Check.Visible = false
+
+elseif player.playerData.backpackEquipped.Value == "Diamond" then
+	local DiamondBuddy = game.ReplicatedStorage.DiamondBuddy:Clone()
+	DiamondBuddy.Parent = ClonedChar
+	DiamondBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	DiamondBuddy.Body.Part0 = ClonedChar.Torso
+	changeBackpack:FireServer("Diamond", ClonedChar)
+
+	bronzeBackpackButton.Check.Visible = false
+	silverBackpackButton.Check.Visible = false
+	goldBackpackButton.Check.Visible = false
+	platBackpackButton.Check.Visible = false
+	emeraldBackpackButton.Check.Visible = false
+	diamondBackpackButton.Check.Visible = true
+	ultimateBackpackButton.Check.Visible = false
+
+elseif player.playerData.backpackEquipped.Value == "Ultimate" then
+	local UltimateBuddy = game.ReplicatedStorage.UltimateBuddy:Clone()
+	UltimateBuddy.Parent = ClonedChar
+	UltimateBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+	UltimateBuddy.Body.Part0 = ClonedChar.Torso
+
+	changeBackpack:FireServer("Ultimate", ClonedChar)
+
+	bronzeBackpackButton.Check.Visible = false
+	silverBackpackButton.Check.Visible = false
+	goldBackpackButton.Check.Visible = false
+	platBackpackButton.Check.Visible = false
+	emeraldBackpackButton.Check.Visible = false
+	diamondBackpackButton.Check.Visible = false
+	ultimateBackpackButton.Check.Visible = true
+
+
+else
+	for _, buddy in ClonedChar:GetChildren() do
+		if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+			buddy:Destroy()
+		end
+	end
+	changeBackpack:FireServer("None", ClonedChar)
+
+	bronzeBackpackButton.Check.Visible = false
+	silverBackpackButton.Check.Visible = false
+	goldBackpackButton.Check.Visible = false
+	platBackpackButton.Check.Visible = false
+	emeraldBackpackButton.Check.Visible = false
+	diamondBackpackButton.Check.Visible = false
+	ultimateBackpackButton.Check.Visible = false
+
+end
+
+bronzeBackpackButton.Activated:Connect(function()
+	if player.playerData.backpackEquipped.Value == "Bronze" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		bronzeBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local BronzeBuddy = game.ReplicatedStorage.BronzeBackpack:Clone()
+		BronzeBuddy.Parent = ClonedChar
+		BronzeBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		BronzeBuddy.Body.Part0 = ClonedChar.Torso
+		bronzeBackpackButton.Check.Visible = true
+		silverBackpackButton.Check.Visible = false
+		goldBackpackButton.Check.Visible = false
+		platBackpackButton.Check.Visible = false
+		emeraldBackpackButton.Check.Visible = false
+		diamondBackpackButton.Check.Visible = false
+		ultimateBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("Bronze", ClonedChar)
+	end
+end)
+
+silverBackpackButton.Activated:Connect(function()
+	if player.playerData.backpackEquipped.Value == "Silver" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		silverBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local SilverBuddy = game.ReplicatedStorage.SilverBackpack:Clone()
+		SilverBuddy.Parent = ClonedChar
+		SilverBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		SilverBuddy.Body.Part0 = ClonedChar.Torso
+
+		bronzeBackpackButton.Check.Visible = false
+		silverBackpackButton.Check.Visible = true
+		goldBackpackButton.Check.Visible = false
+		platBackpackButton.Check.Visible = false
+		emeraldBackpackButton.Check.Visible = false
+		diamondBackpackButton.Check.Visible = false
+		ultimateBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("Silver", ClonedChar)
+	end
+end)
+
+goldBackpackButton.Activated:Connect(function()
+	if player.playerData.backpackEquipped.Value == "Gold" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		goldBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local GoldBuddy = game.ReplicatedStorage.GoldBackpack:Clone()
+		GoldBuddy.Parent = ClonedChar
+		GoldBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		GoldBuddy.Body.Part0 = ClonedChar.Torso
+		bronzeBackpackButton.Check.Visible = false
+		silverBackpackButton.Check.Visible = false
+		goldBackpackButton.Check.Visible = true
+		platBackpackButton.Check.Visible = false
+		emeraldBackpackButton.Check.Visible = false
+		diamondBackpackButton.Check.Visible = false
+		ultimateBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("Gold", ClonedChar)
+	end
+end)
+
+platBackpackButton.Activated:Connect(function()
+	if player.playerData.backpackEquipped.Value == "Platinum" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		platBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local PlatinumBuddy = game.ReplicatedStorage.PlatinumBackpack:Clone()
+		PlatinumBuddy.Parent = ClonedChar
+		PlatinumBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		PlatinumBuddy.Body.Part0 = ClonedChar.Torso
+		bronzeBackpackButton.Check.Visible = false
+		silverBackpackButton.Check.Visible = false
+		goldBackpackButton.Check.Visible = false
+		platBackpackButton.Check.Visible = true
+		emeraldBackpackButton.Check.Visible = false
+		diamondBackpackButton.Check.Visible = false
+		ultimateBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("Platinum", ClonedChar)
+	end
+end)
+
+emeraldBackpackButton.Activated:Connect(function()
+	if player.playerData.backpackEquipped.Value == "Emerald" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		emeraldBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local EmeraldBuddy = game.ReplicatedStorage.EmeraldBackpack:Clone()
+		EmeraldBuddy.Parent = ClonedChar
+		EmeraldBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		EmeraldBuddy.Body.Part0 = ClonedChar.Torso
+		bronzeBackpackButton.Check.Visible = false
+		silverBackpackButton.Check.Visible = false
+		goldBackpackButton.Check.Visible = false
+		platBackpackButton.Check.Visible = false
+		emeraldBackpackButton.Check.Visible = true
+		diamondBackpackButton.Check.Visible = false
+		ultimateBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("Emerald", ClonedChar)
+	end
+end)
+
+diamondBackpackButton.Activated:Connect(function()
+	if player.playerData.backpackEquipped.Value == "Diamond" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		diamondBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local DiamondBuddy = game.ReplicatedStorage.DiamondBackpack:Clone()
+		DiamondBuddy.Parent = ClonedChar
+		DiamondBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		DiamondBuddy.Body.Part0 = ClonedChar.Torso
+		bronzeBackpackButton.Check.Visible = false
+		silverBackpackButton.Check.Visible = false
+		goldBackpackButton.Check.Visible = false
+		platBackpackButton.Check.Visible = false
+		emeraldBackpackButton.Check.Visible = false
+		diamondBackpackButton.Check.Visible = true
+		ultimateBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("Diamond", ClonedChar)
+	end
+end)
+
+ultimateBackpackButton.Activated:Connect(function()
+	if player.playerData.backpackEquipped.Value == "Ultimate" then
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		ultimateBackpackButton.Check.Visible = false
+		changeBackpack:FireServer("None", ClonedChar)
+	else
+		for _, buddy in ClonedChar:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local UltimateBuddy = game.ReplicatedStorage.UltimateBackpack:Clone()
+		UltimateBuddy.Parent = ClonedChar
+		UltimateBuddy.PrimaryPart.CFrame = ClonedChar.Torso.CFrame
+		UltimateBuddy.Body.Part0 = ClonedChar.Torso
+		
+		bronzeBackpackButton.Check.Visible = false
+		silverBackpackButton.Check.Visible = false
+		goldBackpackButton.Check.Visible = false
+		platBackpackButton.Check.Visible = false
+		emeraldBackpackButton.Check.Visible = false
+		diamondBackpackButton.Check.Visible = false
+		ultimateBackpackButton.Check.Visible = true
+		changeBackpack:FireServer("Ultimate", ClonedChar)
+		
+	end
+end)
+
+script.Parent.ViewportFrame.MouseEnter:Connect(function() MouseInDisplay = true end)
+script.Parent.ViewportFrame.MouseLeave:Connect(function() MouseInDisplay = false end)

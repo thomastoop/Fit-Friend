@@ -1,0 +1,821 @@
+local DataStoreService = game:GetService("DataStoreService")
+
+local myDataStore = DataStoreService:GetDataStore("myDataStore")
+
+--//Function
+local function saveData(player) --Create out own function for saving data
+	local tableToSave = { --Creates a table for our values
+		player.playerData.steps.Value; --Saves the first value
+		player.playerData.pounds.Value;
+		player.playerData.protein.Value;
+		player.playerData.fiber.Value;
+		player.playerData.carbs.Value;
+		player.playerData.fats.Value;
+		player.playerData.mins.Value;
+		player.playerData.weight.Value;
+		player.playerData.height.Value;
+		player.playerData.points.Value;
+		player.playerData.feet.Value;
+		player.playerData.inches.Value;
+		player.playerData.isMetric.Value;
+		player.playerData.workout1Title.Value;
+		player.playerData.workout2Title.Value;
+		player.playerData.workout3Title.Value;
+		player.playerData.sugar.Value;
+		player.playerData.calories.Value;
+		player.playerData.sodium.Value;
+		player.playerData.goal.Value;
+		player.playerData.ex1Title.Value;
+		player.playerData.reps1.Value;
+		player.playerData.isEx1Cardio.Value;
+		player.playerData.sets1.Value;
+		player.playerData.weightDist1.Value;
+		player.playerData.setsCompleted1.Value;
+		player.playerData.repsCompleted1.Value;
+		player.playerData.weightDistGoal1.Value;
+		player.playerData.checkMarkW1.Value;
+		player.playerData.isEx2Cardio.Value;
+		player.playerData.ex2Title.Value;
+		player.playerData.sets2.Value;
+		player.playerData.reps2.Value;
+		player.playerData.weightDist2.Value;
+		player.playerData.setsCompleted2.Value;
+		player.playerData.repsCompleted2.Value;
+		player.playerData.weightDistGoal2.Value;
+		
+		
+		player.playerData.stepGoal.Value;
+		player.playerData.minsGoal.Value;
+		player.playerData.calsGoal.Value;
+		
+		player.playerData.caloriesBurned.Value;
+		
+		player.playerData.lastLoginDay.Value;
+		player.playerData.checkVegetables.Value;
+		player.playerData.checkFruit.Value;
+		player.playerData.CustomGoal.Value;
+		
+		player.playerData.isEx3Cardio.Value;
+		player.playerData.ex3Title.Value;
+		player.playerData.sets3.Value;
+		player.playerData.reps3.Value;
+		player.playerData.weightDist3.Value;
+		player.playerData.setsCompleted3.Value;
+		player.playerData.repsCompleted3.Value;
+		player.playerData.weightDistGoal3.Value;
+		
+		player.playerData.isEx4Cardio.Value;
+		player.playerData.ex4Title.Value;
+		player.playerData.sets4.Value;
+		player.playerData.reps4.Value;
+		player.playerData.weightDist4.Value;
+		player.playerData.setsCompleted4.Value;
+		player.playerData.repsCompleted4.Value;
+		player.playerData.weightDistGoal4.Value;
+		
+		player.playerData.isEx5Cardio.Value;
+		player.playerData.ex5Title.Value;
+		player.playerData.sets5.Value;
+		player.playerData.reps5.Value;
+		player.playerData.weightDist5.Value;
+		player.playerData.setsCompleted5.Value;
+		player.playerData.repsCompleted5.Value;
+		player.playerData.weightDistGoal5.Value;
+		
+		player.playerData.isEx6Cardio.Value;
+		player.playerData.ex6Title.Value;
+		player.playerData.sets6.Value;
+		player.playerData.reps6.Value;
+		player.playerData.weightDist6.Value;
+		player.playerData.setsCompleted6.Value;
+		player.playerData.repsCompleted6.Value;
+		player.playerData.weightDistGoal6.Value;
+		
+		player.playerData.isEx7Cardio.Value;
+		player.playerData.ex7Title.Value;
+		player.playerData.sets7.Value;
+		player.playerData.reps7.Value;
+		player.playerData.weightDist7.Value;
+		player.playerData.setsCompleted7.Value;
+		player.playerData.repsCompleted7.Value;
+		player.playerData.weightDistGoal7.Value;
+		
+		player.playerData.checkCustom.Value;
+		player.playerData.checkCustom2.Value;
+		player.playerData.CustomGoal2.Value;
+		player.playerData.lastStepAchievementDate.Value;
+		player.playerData.lastActTimeAchievementDate.Value;
+		player.playerData.lastCalBurnAchievementDate.Value;
+		player.playerData.lastWorkout1AchievementDate.Value;
+		player.playerData.water.Value;
+		player.playerData.lastWaterAchievementDate.Value;
+		player.playerData.sleepGoalHours.Value;
+		player.playerData.sleepGoalMins.Value;
+		player.playerData.sleepTimeHours.Value;
+		player.playerData.sleepTimeMins.Value;
+		player.playerData.isMilitaryTime.Value;
+		player.playerData.bedTimeHours.Value;
+		player.playerData.bedTimeMins.Value;
+		player.playerData.isAM.Value;
+		player.playerData.checkMarkBT.Value;
+		player.playerData.lastBedTimeAchievementDate.Value;
+		player.playerData.lastSleepTimeAchievementDate.Value;
+		player.playerData.lastVeggiesAchievementDate.Value;
+		player.playerData.lastFruitAchievementDate.Value;
+		player.playerData.lastCustom1AchievementDate.Value;
+		player.playerData.lastCustom2AchievementDate.Value;
+		player.playerData.skinColor.Value;
+		player.playerData.topHatEquipped.Value;
+		player.playerData.buddyEquipped.Value;
+		player.playerData.backpackEquipped.Value;
+
+	} --You can continue the list in the same order by adding "player.leaderstats.IntValueName.Value;"
+
+	local success, errorMessage = pcall(myDataStore.SetAsync, myDataStore, player.UserId, tableToSave) --Checks if datastore succeeded
+
+	if success then --If datastore success then
+		print("Data has been saved!") --Prints success
+	else --If datastore fails then
+		print("Data has not been saved!") --Prints failure
+	end
+end
+
+
+game.Players.PlayerAdded:Connect(function(player)
+
+	local playerData = Instance.new("Folder", player)
+	playerData.Name = "playerData"
+	
+	playerData.Parent = player
+	
+	local steps = Instance.new("NumberValue", playerData)
+	steps.Name = "steps"
+	
+	local pounds = Instance.new("NumberValue", playerData)
+	pounds.Name = "pounds"
+	
+	local protein = Instance.new("NumberValue", playerData)
+	protein.Name = "protein"
+	
+	local fiber = Instance.new("NumberValue", playerData)
+	fiber.Name = "fiber"
+	
+	local carbs = Instance.new("NumberValue", playerData)
+	carbs.Name = "carbs"
+	
+	local fats = Instance.new("NumberValue", playerData)
+	fats.Name = "fats"
+	
+	local mins = Instance.new("NumberValue", playerData)
+	mins.Name = "mins"
+
+	local weight = Instance.new("NumberValue", playerData)
+	weight.Name = "weight"
+	
+	local height = Instance.new("NumberValue", playerData)
+	height.Name = "height"
+
+	local points = Instance.new("NumberValue", playerData)
+	points.Name = "points"
+	
+	local feet = Instance.new("NumberValue", playerData)
+	feet.Name = "feet"
+	
+	local inches = Instance.new("NumberValue", playerData)
+	inches.Name = "inches"
+	
+	local isMetric = Instance.new("BoolValue", playerData)
+	isMetric.Name = "isMetric"
+
+	local workout1Title = Instance.new("StringValue", playerData)
+	workout1Title.Name = "workout1Title"
+	
+	local workout2Title = Instance.new("StringValue", playerData)
+	workout2Title.Name = "workout2Title"
+
+	local workout3Title = Instance.new("StringValue", playerData)
+	workout3Title.Name = "workout3Title"
+	
+	local sugar = Instance.new("NumberValue", playerData)
+	sugar.Name = "sugar"
+	
+	local calories = Instance.new("NumberValue", playerData)
+	calories.Name = "calories"
+	
+	local sodium = Instance.new("NumberValue", playerData)
+	sodium.Name = "sodium"
+	
+	local goal = Instance.new("StringValue", playerData)
+	goal.Name = "goal"
+	
+	local ex1Title = Instance.new("StringValue", playerData)
+	ex1Title.Name = "ex1Title"
+
+	local reps1 = Instance.new("StringValue", playerData)
+	reps1.Name = "reps1"
+	
+	local isEx1Cardio = Instance.new("BoolValue", playerData)
+	isEx1Cardio.Name = "isEx1Cardio"
+	
+	local sets1 = Instance.new("StringValue", playerData)
+	sets1.Name = "sets1"
+	
+	local weightDist1 = Instance.new("StringValue", playerData)
+	weightDist1.Name = "weightDist1"
+	
+	local setsCompleted1 = Instance.new("StringValue", playerData)
+	setsCompleted1.Name = "setsCompleted1"
+	
+	local repsCompleted1 = Instance.new("StringValue", playerData)
+	repsCompleted1.Name = "repsCompleted1"
+	
+	local weightDistGoal1 = Instance.new("StringValue", playerData)
+	weightDistGoal1.Name = "weightDistGoal1"
+	
+	local checkMarkW1 = Instance.new("BoolValue", playerData)
+	checkMarkW1.Name = "checkMarkW1"
+	
+	local isEx2Cardio = Instance.new("BoolValue", playerData)
+	isEx2Cardio.Name = "isEx2Cardio"
+	
+	local ex2Title = Instance.new("StringValue", playerData)
+	ex2Title.Name = "ex2Title"
+	
+	local sets2 = Instance.new("StringValue", playerData)
+	sets2.Name = "sets2"
+
+	local reps2 = Instance.new("StringValue", playerData)
+	reps2.Name = "reps2"
+	
+	local weightDist2 = Instance.new("StringValue", playerData)
+	weightDist2.Name = "weightDist2"
+	
+	local setsCompleted2 = Instance.new("StringValue", playerData)
+	setsCompleted2.Name = "setsCompleted2"
+	
+	local repsCompleted2 = Instance.new("StringValue", playerData)
+	repsCompleted2.Name = "repsCompleted2"
+	
+	local weightDistGoal2 = Instance.new("StringValue", playerData)
+	weightDistGoal2.Name = "weightDistGoal2"
+	
+	local stepGoal = Instance.new("NumberValue", playerData)
+	stepGoal.Name = "stepGoal"
+
+	local minsGoal = Instance.new("NumberValue", playerData)
+	minsGoal.Name = "minsGoal"
+	
+	local calsGoal = Instance.new("NumberValue", playerData)
+	calsGoal.Name = "calsGoal"
+	
+	local caloriesBurned = Instance.new("NumberValue", playerData)
+	caloriesBurned.Name = "caloriesBurned"
+	
+	local lastLoginDay = Instance.new("NumberValue", playerData)
+	lastLoginDay.Name = "lastLoginDay"
+	
+	local checkVegetables = Instance.new("BoolValue", playerData)
+	checkVegetables.Name = "checkVegetables"
+	
+	local checkFruit = Instance.new("BoolValue", playerData)
+	checkFruit.Name = "checkFruit"
+	
+	local CustomGoal = Instance.new("StringValue", playerData)
+	CustomGoal.Name = "CustomGoal"
+	
+	-- Exercise 3 data values
+	
+	local isEx3Cardio = Instance.new("BoolValue", playerData)
+	isEx3Cardio.Name = "isEx3Cardio"
+	
+	local ex3Title = Instance.new("StringValue", playerData)
+	ex3Title.Name = "ex3Title"
+
+	local sets3 = Instance.new("StringValue", playerData)
+	sets3.Name = "sets3"
+
+	local reps3 = Instance.new("StringValue", playerData)
+	reps3.Name = "reps3"
+
+	local weightDist3 = Instance.new("StringValue", playerData)
+	weightDist3.Name = "weightDist3"
+
+	local setsCompleted3 = Instance.new("StringValue", playerData)
+	setsCompleted3.Name = "setsCompleted3"
+
+	local repsCompleted3 = Instance.new("StringValue", playerData)
+	repsCompleted3.Name = "repsCompleted3"
+
+	local weightDistGoal3 = Instance.new("StringValue", playerData)
+	weightDistGoal3.Name = "weightDistGoal3"
+	
+	-- Exercise 4
+	local isEx4Cardio = Instance.new("BoolValue", playerData)
+	isEx4Cardio.Name = "isEx4Cardio"
+
+	local ex4Title = Instance.new("StringValue", playerData)
+	ex4Title.Name = "ex4Title"
+
+	local sets4 = Instance.new("StringValue", playerData)
+	sets4.Name = "sets4"
+
+	local reps4 = Instance.new("StringValue", playerData)
+	reps4.Name = "reps4"
+
+	local weightDist4 = Instance.new("StringValue", playerData)
+	weightDist4.Name = "weightDist4"
+
+	local setsCompleted4 = Instance.new("StringValue", playerData)
+	setsCompleted4.Name = "setsCompleted4"
+
+	local repsCompleted4 = Instance.new("StringValue", playerData)
+	repsCompleted4.Name = "repsCompleted4"
+
+	local weightDistGoal4 = Instance.new("StringValue", playerData)
+	weightDistGoal4.Name = "weightDistGoal4"
+	
+	-- Exercise 5
+	
+	local isEx5Cardio = Instance.new("BoolValue", playerData)
+	isEx5Cardio.Name = "isEx5Cardio"
+
+	local ex5Title = Instance.new("StringValue", playerData)
+	ex5Title.Name = "ex5Title"
+
+	local sets5 = Instance.new("StringValue", playerData)
+	sets5.Name = "sets5"
+
+	local reps5 = Instance.new("StringValue", playerData)
+	reps5.Name = "reps5"
+
+	local weightDist5 = Instance.new("StringValue", playerData)
+	weightDist5.Name = "weightDist5"
+
+	local setsCompleted5 = Instance.new("StringValue", playerData)
+	setsCompleted5.Name = "setsCompleted5"
+
+	local repsCompleted5 = Instance.new("StringValue", playerData)
+	repsCompleted5.Name = "repsCompleted5"
+
+	local weightDistGoal5 = Instance.new("StringValue", playerData)
+	weightDistGoal5.Name = "weightDistGoal5"
+	
+	-- Exercise 6
+
+	local isEx6Cardio = Instance.new("BoolValue", playerData)
+	isEx6Cardio.Name = "isEx6Cardio"
+
+	local ex6Title = Instance.new("StringValue", playerData)
+	ex6Title.Name = "ex6Title"
+
+	local sets6 = Instance.new("StringValue", playerData)
+	sets6.Name = "sets6"
+
+	local reps6 = Instance.new("StringValue", playerData)
+	reps6.Name = "reps6"
+
+	local weightDist6 = Instance.new("StringValue", playerData)
+	weightDist6.Name = "weightDist6"
+
+	local setsCompleted6 = Instance.new("StringValue", playerData)
+	setsCompleted6.Name = "setsCompleted6"
+
+	local repsCompleted6 = Instance.new("StringValue", playerData)
+	repsCompleted6.Name = "repsCompleted6"
+
+	local weightDistGoal6 = Instance.new("StringValue", playerData)
+	weightDistGoal6.Name = "weightDistGoal6"
+	
+	-- Exercise 7
+
+	local isEx7Cardio = Instance.new("BoolValue", playerData)
+	isEx7Cardio.Name = "isEx7Cardio"
+
+	local ex7Title = Instance.new("StringValue", playerData)
+	ex7Title.Name = "ex7Title"
+
+	local sets7 = Instance.new("StringValue", playerData)
+	sets7.Name = "sets7"
+
+	local reps7 = Instance.new("StringValue", playerData)
+	reps7.Name = "reps7"
+
+	local weightDist7 = Instance.new("StringValue", playerData)
+	weightDist7.Name = "weightDist7"
+
+	local setsCompleted7 = Instance.new("StringValue", playerData)
+	setsCompleted7.Name = "setsCompleted7"
+
+	local repsCompleted7 = Instance.new("StringValue", playerData)
+	repsCompleted7.Name = "repsCompleted7"
+
+	local weightDistGoal7 = Instance.new("StringValue", playerData)
+	weightDistGoal7.Name = "weightDistGoal7"
+	
+	local checkCustom = Instance.new("BoolValue", playerData)
+	checkCustom.Name = "checkCustom"
+	
+	local checkCustom2 = Instance.new("BoolValue", playerData)
+	checkCustom2.Name = "checkCustom2"
+	
+	local CustomGoal2 = Instance.new("StringValue", playerData)
+	CustomGoal2.Name = "CustomGoal2"
+	
+	local lastStepAchievementDate = Instance.new("StringValue", playerData)
+	lastStepAchievementDate.Name = "lastStepAchievementDate"
+	
+	local lastActTimeAchievementDate = Instance.new("StringValue", playerData)
+	lastActTimeAchievementDate.Name = "lastActTimeAchievementDate"
+	
+	local lastCalBurnAchievementDate = Instance.new("StringValue", playerData)
+	lastCalBurnAchievementDate.Name = "lastCalBurnAchievementDate"
+	
+	local lastWorkout1AchievementDate = Instance.new("StringValue", playerData)
+	lastWorkout1AchievementDate.Name = "lastWorkout1AchievementDate"
+	
+	local water = Instance.new("NumberValue", playerData)
+	water.Name = "water"
+
+	local lastWaterAchievementDate = Instance.new("StringValue", playerData)
+	lastWaterAchievementDate.Name = "lastWaterAchievementDate"
+	
+	local sleepGoalHours = Instance.new("NumberValue", playerData)
+	sleepGoalHours.Name = "sleepGoalHours"
+	
+	local sleepGoalMins = Instance.new("NumberValue", playerData)
+	sleepGoalMins.Name = "sleepGoalMins"
+	
+	local sleepTimeHours = Instance.new("NumberValue", playerData)
+	sleepTimeHours.Name = "sleepTimeHours"
+
+	local sleepTimeMins = Instance.new("NumberValue", playerData)
+	sleepTimeMins.Name = "sleepTimeMins"
+	
+	local isMilitaryTime = Instance.new("BoolValue", playerData)
+	isMilitaryTime.Name = "isMilitaryTime"
+	
+	local bedTimeHours = Instance.new("NumberValue", playerData)
+	bedTimeHours.Name = "bedTimeHours"
+
+	local bedTimeMins = Instance.new("NumberValue", playerData)
+	bedTimeMins.Name = "bedTimeMins"
+	
+	local isAM = Instance.new("BoolValue", playerData)
+	isAM.Name = "isAM"
+
+	local checkMarkBT = Instance.new("BoolValue", playerData)
+	checkMarkBT.Name = "checkMarkBT"
+
+	local lastBedTimeAchievementDate = Instance.new("StringValue", playerData)
+	lastBedTimeAchievementDate.Name = "lastBedTimeAchievementDate"
+	
+	local lastSleepTimeAchievementDate = Instance.new("StringValue", playerData)
+	lastSleepTimeAchievementDate.Name = "lastSleepTimeAchievementDate"
+	
+	local lastVeggiesAchievementDate = Instance.new("StringValue", playerData)
+	lastVeggiesAchievementDate.Name = "lastVeggiesAchievementDate"
+	
+	local lastFruitAchievementDate = Instance.new("StringValue", playerData)
+	lastFruitAchievementDate.Name = "lastFruitAchievementDate"
+	
+	local lastCustom1AchievementDate = Instance.new("StringValue", playerData)
+	lastCustom1AchievementDate.Name = "lastCustom1AchievementDate"
+	
+	local lastCustom2AchievementDate = Instance.new("StringValue", playerData)
+	lastCustom2AchievementDate.Name = "lastCustom2AchievementDate"
+	
+	local skinColor = Instance.new("StringValue", playerData)
+	skinColor.Name = "skinColor"
+	
+	local topHatEquipped = Instance.new("StringValue", playerData)
+	topHatEquipped.Name = "topHatEquipped"
+
+	local buddyEquipped = Instance.new("StringValue", playerData)
+	buddyEquipped.Name = "buddyEquipped"
+
+	local backpackEquipped = Instance.new("StringValue", playerData)
+	backpackEquipped.Name = "backpackEquipped"
+
+	local data
+
+	local success, errormessage = pcall(function()
+		data = myDataStore:GetAsync(player.UserId)
+	end)
+
+	if success and data then
+		steps.Value = data[1] or 0
+		pounds.Value = data[2] or 0
+		protein.Value = data[3] or 0
+		fiber.Value =data[4] or 0
+		carbs.Value= data[5] or 0
+		fats.Value=data[6] or 0
+		mins.Value = data[7] or 0
+		weight.Value = data[8] or 0
+		height.Value = data[9] or 0
+		points.Value = data[10] or 0
+		feet.Value = data[11] or 0
+		inches.Value = data[12] or 0
+		isMetric.Value = data[13] or false
+		workout1Title.Value = data[14] or "Workout 1"
+		workout2Title.Value = data[15] or "Workout 2"
+		workout3Title.Value = data[16] or "Workout 3"
+		sugar.Value =data[17] or 0
+		calories.Value = data[18] or 0
+		sodium.Value = data[19] or 0
+		goal.Value = data[20] or "Goal Set"
+		ex1Title.Value = data[21] or ""
+		reps1.Value = data[22] or ""
+		isEx1Cardio.Value = data[23]
+		sets1.Value = data[24] or ""
+		weightDist1.Value = data[25] or ""
+		setsCompleted1.Value = data[26] or ""
+		repsCompleted1.Value = data[27] or ""
+		weightDistGoal1.Value = data[28] or ""
+		checkMarkW1.Value = data[29] or false
+		isEx2Cardio.Value = data[30] 
+		ex2Title.Value = data[31] or ""
+		sets2.Value = data[32] or ""
+		reps2.Value = data[33] or ""
+		weightDist2.Value = data[34] or ""
+		setsCompleted2.Value = data[35] or ""
+		repsCompleted2.Value = data[36] or ""
+		weightDistGoal2.Value = data[37] or ""
+		stepGoal.Value = data[38] or 0
+		minsGoal.Value = data[39] or 0
+		calsGoal.Value = data[40] or 0
+		caloriesBurned.Value = data[41] or 0
+		lastLoginDay.Value = data[42] or os.date("!*t", os.time()).yday
+
+		checkVegetables.Value = data[43] or false
+		checkFruit.Value = data[44] or false
+		CustomGoal.Value=data[45] or ""
+		
+		isEx3Cardio.Value = data[46] or false
+		ex3Title.Value = data[47] or ""
+		sets3.Value = data[48] or ""
+		reps3.Value = data[49] or ""
+		weightDist3.Value = data[50] or ""
+		setsCompleted3.Value = data[51] or ""
+		repsCompleted3.Value = data[52] or ""
+		weightDistGoal3.Value = data[53] or ""
+		
+		isEx4Cardio.Value = data[54] or false
+		ex4Title.Value = data[55] or ""
+		sets4.Value = data[56] or ""
+		reps4.Value = data[57] or ""
+		weightDist4.Value = data[58] or ""
+		setsCompleted4.Value = data[59] or ""
+		repsCompleted4.Value = data[60] or ""
+		weightDistGoal4.Value = data[61] or ""
+		
+		isEx5Cardio.Value = data[62] or false
+		ex5Title.Value = data[63] or ""
+		sets5.Value = data[64] or ""
+		reps5.Value = data[65] or ""
+		weightDist5.Value = data[66] or ""
+		setsCompleted5.Value = data[67] or ""
+		repsCompleted5.Value = data[68] or ""
+		weightDistGoal5.Value = data[69] or ""
+		
+		isEx6Cardio.Value = data[70] or false
+		ex6Title.Value = data[71] or ""
+		sets6.Value = data[72] or ""
+		reps6.Value = data[73] or ""
+		weightDist6.Value = data[74] or ""
+		setsCompleted6.Value = data[75] or ""
+		repsCompleted6.Value = data[76] or ""
+		weightDistGoal6.Value = data[77] or ""
+		
+		isEx7Cardio.Value = data[78] or false
+		ex7Title.Value = data[79] or ""
+		sets7.Value = data[80] or ""
+		reps7.Value = data[81] or ""
+		weightDist7.Value = data[82] or ""
+		setsCompleted7.Value = data[83] or ""
+		repsCompleted7.Value = data[84] or ""
+		weightDistGoal7.Value = data[85] or ""
+		
+		checkCustom.Value = data[86] or false
+		checkCustom2.Value = data[87] or false
+		CustomGoal2.Value = data[88] or ""
+		lastStepAchievementDate.Value = data[89] or ""
+		lastActTimeAchievementDate.Value = data[90] or ""
+		lastCalBurnAchievementDate.Value = data[91] or ""
+		lastWorkout1AchievementDate.Value = data[92] or ""
+		
+		water.Value = data[93] or 0
+		lastWaterAchievementDate.Value = data[94] or ""
+		sleepGoalHours.Value = data[95] or 0
+		sleepGoalMins.Value = data[96] or 0
+		sleepTimeHours.Value = data[97] or 0
+		sleepTimeMins.Value = data[98] or 0
+		isMilitaryTime.Value = data[99] or false
+		bedTimeHours.Value = data[100] or 0
+		bedTimeMins.Value = data[101] or 0
+		isAM.Value = data[102] or false
+		checkMarkBT.Value = data[103] or false
+		lastBedTimeAchievementDate.Value = data[104] or ""
+		lastSleepTimeAchievementDate.Value = data[105] or ""
+		lastVeggiesAchievementDate.Value = data[106] or ""
+		lastFruitAchievementDate.Value = data[107] or ""
+		lastCustom1AchievementDate.Value = data[108] or ""
+		lastCustom2AchievementDate.Value = data[109] or ""
+		skinColor.Value = data[110] or "White"
+		topHatEquipped.Value = data[111] or "None"
+		buddyEquipped.Value = data[112] or "None"
+		backpackEquipped.Value = data[113] or "None"
+		
+		
+		
+		if lastLoginDay.Value ~= os.date("!*t", os.time()).yday then
+			
+			steps.Value = 0
+			pounds.Value = 0
+			protein.Value = 0
+			fiber.Value = 0
+			carbs.Value = 0
+			fats.Value = 0
+			mins.Value = 0
+			sugar.Value = 0
+			calories.Value = 0
+			sodium.Value = 0
+			setsCompleted1.Value = ""
+			repsCompleted1.Value = ""
+			weightDistGoal1.Value = ""
+			checkMarkW1.Value = false
+			setsCompleted2.Value = ""
+			repsCompleted2.Value = ""
+			weightDistGoal2.Value = ""
+			checkVegetables.Value=false
+			checkFruit.Value=false
+			CustomGoal.Value=""
+
+			caloriesBurned.Value = 0
+			checkCustom.Value = false
+			checkCustom2.Value = false
+			CustomGoal2.Value = ""
+			water.Value = 0
+			sleepTimeHours.Value = 0
+			sleepTimeMins.Value = 0
+			checkMarkBT.Value = false
+			
+		end
+		
+		lastLoginDay.Value = os.date("!*t", os.time()).yday
+		
+	else
+		-- Assign default values if data does not exist
+		steps.Value = 0
+		pounds.Value = 0
+		protein.Value = 0
+		fiber.Value = 0
+		carbs.Value = 0
+		fats.Value = 0
+		mins.Value = 0
+		weight.Value = 0
+		height.Value = 0
+		points.Value = 0
+		feet.Value = 0
+		inches.Value = 0
+		isMetric.Value = false
+		workout1Title.Value = "Workout 1"
+		workout2Title.Value = "Workout 2"
+		workout3Title.Value = "Workout 3"
+		sugar.Value = 0
+		calories.Value = 0
+		sodium.Value = 0
+		goal.Value = "Set Goal"
+		ex1Title.Value = ""
+		reps1.Value = ""
+		isEx1Cardio.Value = true
+		sets1.Value = ""
+		weightDist1.Value = ""
+		setsCompleted1.Value = ""
+		repsCompleted1.Value = ""
+		weightDistGoal1.Value = ""
+		checkMarkW1.Value = false
+		isEx2Cardio.Value = true
+		ex2Title.Value = ""
+		sets2.Value = ""
+		reps2.Value = ""
+		weightDist2.Value = ""
+		setsCompleted2.Value = ""
+		repsCompleted2.Value = ""
+		weightDistGoal2.Value = ""
+		checkVegetables.Value=false
+		checkFruit.Value=false
+		CustomGoal.Value=""
+		
+		stepGoal.Value = 0
+		minsGoal.Value = 0
+		calsGoal.Value = 0
+		
+		caloriesBurned.Value = 0
+		
+		lastLoginDay.Value = os.date("!*t", os.time()).yday
+		
+		isEx3Cardio.Value = false
+		ex3Title.Value = ""
+		sets3.Value = ""
+		reps3.Value = ""
+		weightDist3.Value = ""
+		setsCompleted3.Value = ""
+		repsCompleted3.Value = ""
+		weightDistGoal3.Value = ""
+		
+		isEx4Cardio.Value = false
+		ex4Title.Value = ""
+		sets4.Value = ""
+		reps4.Value = ""
+		weightDist4.Value = ""
+		setsCompleted4.Value = ""
+		repsCompleted4.Value = ""
+		weightDistGoal4.Value =  ""
+		
+		isEx5Cardio.Value =  false
+		ex5Title.Value =  ""
+		sets5.Value =  ""
+		reps5.Value =  ""
+		weightDist5.Value = ""
+		setsCompleted5.Value =  ""
+		repsCompleted5.Value = ""
+		weightDistGoal5.Value = ""
+		
+		isEx6Cardio.Value =  false
+		ex6Title.Value =  ""
+		sets6.Value = ""
+		reps6.Value =  ""
+		weightDist6.Value =  ""
+		setsCompleted6.Value = ""
+		repsCompleted6.Value =  ""
+		weightDistGoal6.Value =  ""
+		
+		isEx7Cardio.Value = false
+		ex7Title.Value = ""
+		sets7.Value =  ""
+		reps7.Value = ""
+		weightDist7.Value = ""
+		setsCompleted7.Value = ""
+		repsCompleted7.Value = ""
+		weightDistGoal7.Value = ""
+		
+		checkCustom.Value = false
+		checkCustom2.Value = false
+		CustomGoal2.Value = ""
+		lastStepAchievementDate.Value = ""
+		lastActTimeAchievementDate.Value = ""
+		lastCalBurnAchievementDate.Value = ""
+		lastWorkout1AchievementDate.Value = ""
+		
+		water.Value = 0
+		lastWaterAchievementDate.Value = ""
+		sleepGoalHours.Value = 0
+		sleepGoalMins.Value = 0
+		sleepTimeHours.Value = 0
+		sleepTimeMins.Value = 0
+		isMilitaryTime.Value = false
+		bedTimeHours.Value = 0
+		bedTimeMins.Value = 0
+		isAM.Value = false
+		checkMarkBT.Value = false
+		lastBedTimeAchievementDate.Value = ""
+		lastSleepTimeAchievementDate.Value = ""
+		lastVeggiesAchievementDate.Value = ""
+		lastFruitAchievementDate.Value = ""
+		lastCustom1AchievementDate.Value = ""
+		lastCustom2AchievementDate.Value = ""
+		skinColor.Value = "White"
+		topHatEquipped.Value = "None"
+		buddyEquipped.Value = "None"
+		backpackEquipped.Value = "None"
+
+		print("There was an error whilst getting your data")
+		warn(errormessage)
+	end
+end)
+
+
+game.Players.PlayerRemoving:Connect(function(player)
+
+	saveData(player)
+
+end)
+
+
+game:BindToClose(function() --When the game's servers are shutting down
+	for _, player in ipairs(game.Players:GetPlayers()) do --loop through all the players in the server
+		task.spawn(saveData, player) --save all the player's data
+	end
+end)
+
+local function checkMidnight()
+	local currentTime = os.date("*t", os.time())
+	if currentTime.hour == 0 and currentTime.min == 0 then
+
+	end
+end
+
+while true do
+	checkMidnight()
+	task.wait(60)
+end

@@ -1,0 +1,175 @@
+local changeBuddy = game.ReplicatedStorage.ChangeBuddyEquipped
+
+changeBuddy.OnServerEvent:Connect(function(player, buddyType, clonedChar)
+	player.playerData.buddyEquipped.Value = buddyType
+
+	local Character = player.Character
+	if buddyType == "Bronze" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local BronzeBuddy = game.ServerStorage.BronzeBuddy:Clone()
+		BronzeBuddy.Parent = Character
+		BronzeBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		BronzeBuddy.Body.Part0 = Character.Torso
+
+		
+	elseif buddyType == "Silver" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local SilverBuddy = game.ServerStorage.SilverBuddy:Clone()
+		SilverBuddy.Parent = Character
+		SilverBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		SilverBuddy.Body.Part0 = Character.Torso
+		
+	elseif buddyType == "Gold" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local GoldBuddy = game.ServerStorage.GoldBuddy:Clone()
+		GoldBuddy.Parent = Character
+		GoldBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		GoldBuddy.Body.Part0 = Character.Torso
+		
+	elseif buddyType == "Platinum" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local PlatinumBuddy = game.ServerStorage.PlatinumBuddy:Clone()
+		PlatinumBuddy.Parent = Character
+		PlatinumBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		PlatinumBuddy.Body.Part0 = Character.Torso
+
+	elseif buddyType == "Emerald" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local EmeraldBuddy = game.ServerStorage.EmeraldBuddy:Clone()
+		EmeraldBuddy.Parent = Character
+		EmeraldBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		EmeraldBuddy.Body.Part0 = Character.Torso
+		
+	elseif buddyType == "Diamond" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local DiamondBuddy = game.ServerStorage.DiamondBuddy:Clone()
+		DiamondBuddy.Parent = Character
+		DiamondBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		DiamondBuddy.Body.Part0 = Character.Torso
+		
+	elseif buddyType == "Ultimate" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBuddy" or buddy.Name == "SilverBuddy" or buddy.Name == "GoldBuddy" or buddy.Name == "PlatinumBuddy" or buddy.Name == "EmeraldBuddy" or buddy.Name == "DiamondBuddy" or buddy.Name == "UltimateBuddy" then
+				buddy:Destroy()
+			end
+		end
+		local UltimateBuddy = game.ServerStorage.UltimateBuddy:Clone()
+		UltimateBuddy.Parent = Character
+		UltimateBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		UltimateBuddy.Body.Part0 = Character.Torso
+		
+	end
+end)
+
+local changeBackpack = game.ReplicatedStorage.ChangeBackpackEquipped
+
+changeBackpack.OnServerEvent:Connect(function(player, buddyType, clonedChar)
+	player.playerData.backpackEquipped.Value = buddyType
+
+	local Character = player.Character
+	if buddyType == "Bronze" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local BronzeBuddy = game.ServerStorage.BronzeBackpack:Clone()
+		BronzeBuddy.Parent = Character
+		BronzeBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		BronzeBuddy.Body.Part0 = Character.Torso
+
+
+	elseif buddyType == "Silver" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local SilverBuddy = game.ServerStorage.SilverBackpack:Clone()
+		SilverBuddy.Parent = Character
+		SilverBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		SilverBuddy.Body.Part0 = Character.Torso
+
+	elseif buddyType == "Gold" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local GoldBuddy = game.ServerStorage.GoldBackpack:Clone()
+		GoldBuddy.Parent = Character
+		GoldBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		GoldBuddy.Body.Part0 = Character.Torso
+
+	elseif buddyType == "Platinum" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local PlatinumBuddy = game.ServerStorage.PlatinumBackpack:Clone()
+		PlatinumBuddy.Parent = Character
+		PlatinumBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		PlatinumBuddy.Body.Part0 = Character.Torso
+
+	elseif buddyType == "Emerald" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local EmeraldBuddy = game.ServerStorage.EmeraldBackpack:Clone()
+		EmeraldBuddy.Parent = Character
+		EmeraldBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		EmeraldBuddy.Body.Part0 = Character.Torso
+
+	elseif buddyType == "Diamond" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local DiamondBuddy = game.ServerStorage.DiamondBackpack:Clone()
+		DiamondBuddy.Parent = Character
+		DiamondBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		DiamondBuddy.Body.Part0 = Character.Torso
+
+	elseif buddyType == "Ultimate" then
+		for _, buddy in Character:GetChildren() do
+			if buddy.Name == "BronzeBackpack" or buddy.Name == "SilverBackpack" or buddy.Name == "GoldBackpack" or buddy.Name == "PlatinumBackpack" or buddy.Name == "EmeraldBackpack" or buddy.Name == "DiamondBackpack" or buddy.Name == "UltimateBackpack" then
+				buddy:Destroy()
+			end
+		end
+		local UltimateBuddy = game.ServerStorage.UltimateBackpack:Clone()
+		UltimateBuddy.Parent = Character
+		UltimateBuddy.PrimaryPart.CFrame = Character.Torso.CFrame
+		UltimateBuddy.Body.Part0 = Character.Torso
+
+	end
+end)
+
+		
