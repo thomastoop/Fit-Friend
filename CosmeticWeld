@@ -1,3 +1,5 @@
+-- This script welds the custom cosmetics (buddies and backpack) to the player once they select them. This must be done as our accessories are based on a model and not an accessory, meaning they cannot be easily placed on the character like the hats were.
+
 local changeBuddy = game.ReplicatedStorage.ChangeBuddyEquipped
 
 changeBuddy.OnServerEvent:Connect(function(player, buddyType, clonedChar)
